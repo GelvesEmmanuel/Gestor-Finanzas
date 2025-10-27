@@ -1,0 +1,1 @@
+export const TOKEN_SECRET = "some secret key"   //llave secreta la uso en jwt.js para crear token  

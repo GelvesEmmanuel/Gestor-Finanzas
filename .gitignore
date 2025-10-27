@@ -1,0 +1,17 @@
+# gestor-finanzas/.gitignore
+
+# Node
+**/node_modules/
+**/npm-debug.log*
+**/package-lock.json
+
+# Env
+**/.env*
+
+# Build
+**/build/
+**/dist/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,65 @@
+primer paso 
+npm init -y --> para dependencias del proyecto
+npm i express para instalar express
+app.js in src para el servidor 
+
+In src create thje next folders : routes for url of backend
+    controllers---> funciones 
+    models
+    middlewares para protecciond e rutas por usuarios y informacion privada
+    schemas para validadcion de datos 
+    lib para funciones que se repiten en varias partes
+    config.js par5a configuraciones globales 
+    db.js base de datos
+    index.js arranca la aplicacion
+
+para arrancar el proyecto uso node src/index.js , solo que aqui no se reinicia cada ves que hago cambio,
+asi que puedo usar nodemono node --watch src/index.js
+
+npm i morgan ---> para ver peticiones que llegan por terminal
+
+conexion base de datos mongodb
+npm i mongoose
+
+
+luego de conectar bs de datos creamos un modelo del usuario en models`
+
+Luego se hace la logica del registro de los usuarios 
+
+se realiza en auth.controoler , ahi mismo se guarda en la base de datos , las pruebas se hacen mediante thunder client 
+asi se verifica si se estan haciendo las request correctas
+
+///a continuacion se encripta la contrase;a y se genera un token, esto es para seguridad
+npm i bcryptjs
+
+luego generaremos una credencial o token para saber si un usaurio esta registrado o no en el frontend
+es como un pase que devuelve el frontend para saber si se le puede dar autorizacion desde el backend con json web token
+npm i jsonwebtoken
+este genera el token pero la idea es enviralo por una cookie
+
+** luego empesamos a haer la logica dle login 
+** creamos una funcion de logout
+
+/// creacion de rutas protegidas que solo el usuario puede accede cuando este logeado, creando una funcion 
+que revisa si el usuario esta autenticado.
+  si quiero proteger rutas soplo pongo la funcion authRequired en la ruta y ya se protege .jijiji
+
+
+/ creamos rutas para tareas y funciones de las tareas en mi caso modioficare paa registrar gastos e ingresos
+pero seguire la logica de una tareas
+creraremos crud 
+
+
+luego crearemos unos schem,as para vliadar los datos que vienen desde el frontend o cliente usando las siguientes bibliotecas
+express-validator, npm joi, zod npm ,npm i zood
+cremoas un middlññeware
+
+
+frontend, tailwind, react routes dom , react hook form
+
+
+npm install react-hook-form
+
+
+cuando intentamos hacer peticiones o mandar datos al backend desde el frontend sale problema de cors ya que uno es port 5173 y el otro 3000 y deberian ser el mismo , se coluciona en app,js del backend
+instalando cors
