@@ -8,4 +8,4 @@ export const loginRequest  =  user => axios.post(`/login`, user)
 
 export const verifyTokenRequest = () => axios.get('/verify')
 
-
+export const upadateProfilerequest = () => axios.get('/profile', data)

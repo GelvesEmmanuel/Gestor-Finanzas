@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { required } from "zod/mini";
-import { _enum } from "zod/v4/core";
+import { _enum } from "zod/v4/core"; 
 
 const finanzasSchema =new mongoose.Schema({
 

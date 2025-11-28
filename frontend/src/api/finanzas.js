@@ -2,8 +2,9 @@ import axios from './axios'
 
 
 export const getFinanzasRequest = () => axios.get('/finanzas');
+export const getFinanzaRequest = () => axios.get(`/finanzas/${id}`)
 
-// crear nueva finanza (ingreso o gasto)
+// crear nueva finanza (ingreso o gasto) 
 export const createFinanzaRequest = (data) => axios.post('/finanzas', data);
 
 // obtener balance total

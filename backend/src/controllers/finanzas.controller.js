@@ -31,7 +31,7 @@ export const createFinanzas = async (req, res) => {
   }
 };
 export const getFinanza = async (req, res) => {
-  const finanza = await Finanza.findById(req.params.id).populate("user"); // el req.paramks.id es el :id que sale junto al url en finanzas.routes.js
+  const finanza = await Finanza.findById(req.params.id).populate("user"); // el req.params.id es el :id que sale junto al url en finanzas.routes.js
   if (!finanza) return res.status(404).json({ message: "tarea no encontrada" });
   res.json(finanza);
 };

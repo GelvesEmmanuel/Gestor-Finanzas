@@ -1,78 +1,73 @@
-function HomePages() {
-    return (
-         <div className="min-h-screen bg-zinc-900 text-white">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center py-24 px-6">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-          Administra tus <span className="text-emerald-400">finanzas</span> con facilidad
-        </h1>
-        <p className="text-zinc-400 max-w-2xl mb-10 text-lg">
-          Controla tus ingresos, gastos y metas financieras desde una plataforma moderna,
-          segura y fácil de usar. Diseñada para que tengas el control total de tu dinero.
+// src/pages/Home.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+// Componente HomePages
+
+const HomePages = () => {
+  return (
+    <div className="min-h-screen bg-gray-50 p-4">
+      {/* contexto principal */}
+      <main className="max-w-4xl mx-auto text-center">
+        <h1 className="text-4xl font-bold mb-6 text-black">Bienvenido a tu App de Finanzas</h1>
+        <p className="text-lg mb-10 text-gray-600"> 
+          Gestiona tus finanzas personales de manera sencilla e intuitiva. Registra tus ingresos y gastos,
+          establece metas y mantén un control total sobre tu dinero.
         </p>
-        <div className="space-x-4">
-          <a
-            href="/register"
-            className="bg-emerald-500 hover:bg-emerald-600 transition px-6 py-3 rounded-lg font-medium text-white shadow-md"
-          >
-            Comienza ahora
-          </a>
-          <a
-            href="/login"
-            className="border border-emerald-400 text-emerald-400 hover:bg-emerald-500 hover:text-white transition px-6 py-3 rounded-lg font-medium"
-          >
-            Iniciar sesión
-          </a>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-6 bg-zinc-800">
-        <h2 className="text-3xl font-semibold text-center mb-12">
-          ¿Por qué usar <span className="text-emerald-400">FinanzasApp</span>?
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          <div className="bg-zinc-900 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-            <h3 className="text-xl font-semibold mb-3 text-emerald-400">Control total</h3>
-            <p className="text-zinc-400">
-              Registra y visualiza tus ingresos y gastos para mantener tus finanzas en orden.
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {/* Image 1 */}
+          <div className="bg-gray-200 from-indigo-100 to-blue-100 rounded-3xl p-6 shadow-lg flex flex-col items-center">
+            <img src="/public/1761612945.png" alt="Gráfico de crecimiento" className="w-full max-w-full h-auto rounded-lg" />
           </div>
-          <div className="bg-zinc-900 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-            <h3 className="text-xl font-semibold mb-3 text-emerald-400">Reportes inteligentes</h3>
-            <p className="text-zinc-400">
-              Obtén gráficos claros y reportes automáticos que te muestran tu progreso financiero.
-            </p>
-          </div>
-          <div className="bg-zinc-900 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform">
-            <h3 className="text-xl font-semibold mb-3 text-emerald-400">Seguridad garantizada</h3>
-            <p className="text-zinc-400">
-              Tus datos están protegidos con encriptación avanzada y autenticación segura.
-            </p>
+          {/* Image 2 */}
+          <div className="bg-gray-200 from-indigo-100 to-blue-100 rounded-3xl p-6 shadow-lg flex flex-col items-center">
+            <img src="/public/1761613186.png" alt="Panel de control" className="w-full max-w-full h-auto rounded-lg" />
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 text-center px-6 bg-gradient-to-r from-emerald-600 to-emerald-400 text-zinc-900">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">Empieza a cuidar tus finanzas hoy</h2>
-        <p className="text-lg mb-8 text-zinc-800">
-          Crea una cuenta gratuita y lleva el control de tu economía personal.
-        </p>
-        <a
-          href="/register"
-          className="bg-zinc-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-zinc-800 transition"
-        >
-          Crear mi cuenta
-        </a>
-      </section>
-
+        {/* Sección de Beneficios y Objetivo */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">¿Por qué usar nuestra App?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-xl shadow-sm">
+              <h3 className="text-lg font-medium text-blue-600 mb-2">Beneficio del Registro</h3>
+              <p className="text-gray-600">
+                Al registrarte, obtienes acceso completo a todas las herramientas de gestión financiera.
+                Puedes crear tu perfil, guardar tus datos, y comenzar a registrar tus movimientos financieros de forma segura.
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-sm">
+              <h3 className="text-lg font-medium text-green-600 mb-2">Objetivo del Sitio</h3>
+              <p className="text-gray-600">
+                Nuestro objetivo es ayudarte a tomar el control de tus finanzas personales. Simplificamos el proceso
+                de seguimiento de tus gastos e ingresos para que puedas ahorrar e invertir de manera inteligente.
+              </p>
+            </div>
+          </div>
+        </section>
+        {/* Botones */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+          <Link
+            to="/register"
+            className="px-6 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors"
+          >
+            Registrarse
+          </Link>
+          <Link
+            to="/login"
+            className="px-6 py-3 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors"
+          >
+            iniciar sesion
+          </Link>
+        </div>
+      </main>
       {/* Footer */}
-      <footer className="bg-zinc-950 text-zinc-500 py-6 text-center text-sm">
-        © {new Date().getFullYear()} FinanzasApp — Todos los derechos reservados.
+      <footer className="mt-8 bg-gray-50 text-center text-sm text-gray-500 py-4 border-t border-gray-200">
+        <p className="text-xs">
+          © {new Date().getFullYear()} FinanzasApp. Todos los derechos reservados.
+        </p>
       </footer>
     </div>
-    )
-}
-export default HomePages
+  );
+};
+
+export default HomePages;

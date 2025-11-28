@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { createContext, useState } from "react";
-import { createFinanzaRequest, getBalanceRequest } from "../api/finanzas";
+import { createFinanzaRequest, getBalanceRequest, deleteFinanzaRequest, updateFinanzaRequest } from "../api/finanzas";
 
-import {useAuth} from './authContext'
+import { useAuth } from "./authContext";
 import { is } from "zod/locales";
 
 const finanzasContext = createContext();
@@ -20,8 +20,7 @@ export function FinanzasProvider({ children }) {
     gastos: 0,
     balance: 0,
   });
-  const  { isAuthenticated, user} = useAuth()
-
+  const { isAuthenticated, user } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -39,8 +38,6 @@ export function FinanzasProvider({ children }) {
     }
   };
 
-  // crear nueva finanza
-
   const createFinanza = async (finanzaData) => {
     try {
       await createFinanzaRequest(finanzaData);
@@ -49,16 +46,38 @@ export function FinanzasProvider({ children }) {
       console.log("Error al crear la finanza", error);
     }
   };
+// ACTUALIZAR FINANZA 
+  const updateFinanza = async (id, data) => {
+    try {
+      const res = await updateFinanzaRequest(id, data);
+
+      setFinanzas(finanzas.map(f => f._id === id ? res.data : f));
+      recalculateBalance();
+      await fetchBalance();
+    } catch (error) {
+      console.log("Error al actualizar finanza", error);
+    }
+  };
+
+  // ELIMINAR FINANZA
+  const deleteFinanza = async (id) => {
+    try {
+      await deleteFinanzaRequest(id);
+
+      setFinanzas(finanzas.filter(f => f._id !== id));
+      recalculateBalance();
+      await fetchBalance();
+    } catch (error) {
+      console.log("Error al eliminar finanza", error);
+    }
+  };
 
   useEffect(() => {
-
-    if(isAuthenticated && user){
-      fetchBalance()
-    }else{
-
-      setBalance(null)
+    if (isAuthenticated && user) {
+      fetchBalance();
+    } else {
+      setBalance({ ingresos: 0, gastos: 0, balance: 0 });
     }
-   
   }, [isAuthenticated, user]);
 
   return (
@@ -68,6 +87,8 @@ export function FinanzasProvider({ children }) {
         loading,
         fetchBalance,
         createFinanza,
+        deleteFinanza,
+        updateFinanza
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import {
   registerRequest,
   loginRequest,
-  verifyTokenRequest,
+  verifyTokenRequest,upadateProfilerequest
 } from "../api/auth.js";
 import { set } from "mongoose";
 import Cookies from "js-cookie";
@@ -138,6 +138,46 @@ export const AuthProvider = ({ children }) => {
       setUser(null)
 
     }
+
+const updateProfile = async (profileData) => {
+    try {
+      // Limpiar errores anteriores
+      setAuthErrors([]);
+
+      // Hacer la petición PUT al backend
+      const response = await updateProfileRequest(profileData);
+
+      // Actualizar el estado del usuario con los nuevos datos
+      setUser(response.data);
+
+      // Opcional: Mostrar mensaje de éxito
+      console.log("Perfil actualizado correctamente.");
+
+      // Opcional: Regenerar el token si cambió la contraseña (esto es más complejo y opcional)
+      // Si decides regenerar el token, aquí es donde lo harías y lo actualizarías en la cookie/localStorage
+      // y posiblemente actualizarías el estado de autenticación.
+
+    } catch (error) {
+      console.error("Error en updateProfile:", error);
+
+      let errorMessage = "Ocurrió un error inesperado al actualizar el perfil.";
+
+      if (error.response) {
+        // El servidor respondió con un código de estado fuera del rango 2xx
+        errorMessage = error.response.data.message || `Error ${error.response.status}`;
+      } else if (error.request) {
+        // La solicitud se hizo pero no hubo respuesta
+        errorMessage = "No se pudo conectar con el servidor.";
+      } else {
+        // Algo pasó al preparar la solicitud
+        errorMessage = error.message;
+      }
+
+      // Actualizar estado de errores
+      setAuthErrors([errorMessage]);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -147,7 +187,8 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         authErrors,
         signin,
-        loading
+        loading,
+        updateProfile
       }}
     >
       {children}

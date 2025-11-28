@@ -1,81 +1,104 @@
-import { useEffect, useState } from "react";
+// src/pages/finanzasPages.jsx
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { getBalanceRequest, createFinanzaRequest } from "../api/finanzas";
 import { useFinanzas } from "../context/finanzasContext";
+import { useAuth } from "../context/authContext";
 
-function FinanzasPages() {  
-  
+
+// Componente FinanzasPages
+
+function FinanzasPages() {
   const { register, handleSubmit, reset } = useForm();
-  const {balance, createFinanza, loading} = useFinanzas()
-  
-  
+  const { balance, createFinanza} = useFinanzas();
 
+  const { user } = useAuth();
 
-   const onSubmit = handleSubmit(async (data) => {
-      await createFinanza(data);
-      reset();
+// registrar finanza
+const onSubmit = handleSubmit(async (data) => {
+    await createFinanza(data);
+    await fetchHistorial();
+    reset();
   });
 
+ 
+  // FILTRAR SOLO FINANZAS
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
-      {/* Tarjeta del balance */}
-      <div className="bg-white shadow-lg rounded-2xl p-8 text-center w-80">
-        <h2 className="text-2xl font-bold mb-4">💰 Balance Actual</h2>
-        {loading ? (
-          <p className="text-gray-500">Cargando...</p>
-        ) : (
-          <>
-            <p className="text-green-600 font-semibold">
-              Ingresos: ${balance.ingresos}
-            </p>
-            <p className="text-red-600 font-semibold">Gastos: ${balance.gastos}</p>
-            <hr className="my-3" />
-            <h1 className="text-3xl font-bold">
-              Total:{" "}
-              <span
-                className={
-                  balance.balance >= 0 ? "text-green-600" : "text-red-600"
-                }
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
+      <div className="w-full max-w-4xl space-y-8">
+        <h1 className="text-4xl font-bold text-black text-center mb-6">
+          Registro finanzas
+        </h1>
+        {/* TARJETAS */}
+        <div className="flex flex-col md:flex-row gap-8 mb-10 w-full">
+          <div className="bg-green-500 text-white rounded-2xl p-6 flex flex-col items-center justify-center flex-1 shadow-lg">
+            <h2 className="text-lg font-semibold mb-2">Ingresos</h2>
+            <p className="text-2xl font-bold">${balance?.ingresos ?? 0}</p>
+          </div>
+          <div className="bg-red-500 text-white rounded-2xl p-6 flex flex-col items-center justify-center flex-1 shadow-lg">
+            <h2 className="text-lg font-semibold mb-2">Gastos</h2>
+            <p className="text-2xl font-bold">${balance?.gastos ?? 0}</p>
+          </div>
+          <div className="bg-yellow-500 text-white rounded-2xl p-6 flex flex-col items-center justify-center flex-1 shadow-lg">
+            <h2 className="text-lg font-semibold mb-2">Balance</h2>
+            <p className="text-2xl font-bold">${balance?.balance ?? 0}</p>
+          </div>
+        </div>
+        {/* FORMULARIO */}
+        <div className="w-full max-w-2xl mx-auto">
+          <form
+            onSubmit={onSubmit}
+            className="bg-white rounded-2xl shadow-xl p-8 w-full space-y-6"
+          >
+            <h2 className="text-2xl font-bold text-center mb-4 text-black">
+              Agregar movimiento
+            </h2>
+            <div className="flex flex-col text-left">
+              <label className="text-base font-medium text-gray-700 mb-2">
+                Valor
+              </label>
+              <input
+                placeholder="Ingresa valor"
+                type="number"
+                {...register("valor", { required: true })}
+                className="w-full bg-gray-200 text-gray-900 px-4 py-3 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col text-left">
+              <label className="text-base font-medium text-gray-700 mb-2">
+                Descripción
+              </label>
+              <input
+                placeholder="Ingresa descripción"
+                type="text"
+                {...register("descripcion", { required: true })}
+                className="w-full bg-gray-200 text-gray-900 px-4 py-3 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col text-left">
+              <label className="text-base font-medium text-gray-700 mb-2">
+                Tipo
+              </label>
+              <select
+                {...register("tipo")}
+                className="w-full bg-gray-200 text-gray-900 px-4 py-3 rounded-lg"
               >
-                ${balance.balance}
-              </span>
-            </h1>
-          </>
-        )}
+                <option value="Ingreso">Ingreso</option>
+                <option value="Gasto">Gasto</option>
+              </select>
+            </div>
+            <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full mt-6">
+              Registrar
+            </button>
+            
+          </form>
+        </div>
+        
+       
+        <footer className="mt-12 text-center text-sm text-gray-500 py-6 border-t border-gray-200">
+          © {new Date().getFullYear()} FinanzasApp
+        </footer>
       </div>
-
-      {/* Formulario para registrar */}
-      <form
-        onSubmit={onSubmit}
-        className="mt-8 flex flex-col gap-4 bg-white p-6 rounded-xl shadow-md w-80"
-      >
-        <input
-          type="number"
-          placeholder="Valor"
-          {...register("valor", { required: true })}
-          className="border p-2 rounded"
-        />
-
-        <input
-          type="text"
-          placeholder="Descripción"
-          {...register("descripcion", { required: true })}
-          className="border p-2 rounded"
-        />
-
-        <select {...register("tipo")} className="border p-2 rounded">
-          <option value="Ingreso">Ingreso</option>
-          <option value="Gasto">Gasto</option>
-        </select>
-
-        <button
-          type="submit"
-          className="bg-green-600 text-white py-2 rounded hover:bg-green-700"
-        >
-          Registrar
-        </button>
-      </form>
     </div>
   );
 }

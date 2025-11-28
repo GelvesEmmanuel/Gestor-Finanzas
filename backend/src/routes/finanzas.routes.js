@@ -11,7 +11,7 @@ router.delete('/finanzas/:id', authRequired, deleteFinanzas )
 router.put('/finanzas/:id', authRequired, updateFinanzas )
 router.get('/finanzasBalance', authRequired, getBalance)
 router.post('/finanzasPeriodo', authRequired, getFinanzasPeriodo)
-router.post('/metas', authRequired, getFinanzasPeriodo)
+
 
 
 export default router

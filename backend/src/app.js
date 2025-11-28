@@ -3,6 +3,8 @@ import morgan from 'morgan'
 import authRoutes from './routes/auth.routes.js'
 import finanzasRoutes from './routes/finanzas.routes.js'
 import cookieParser from 'cookie-parser'
+import metasRoutes from './routes/metas.routes.js'
+import historialRoutes from './routes/historial.routes.js'
 import cors from 'cors'
 
 const app = express()  // servidor 
@@ -18,4 +20,6 @@ app.use(cookieParser())
 
 app.use('/api', authRoutes);
 app.use('/api', finanzasRoutes);
+app.use('/api', metasRoutes)
+app.use('/api', historialRoutes)
 export default app;  
