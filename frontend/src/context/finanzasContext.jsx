@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import { createFinanzaRequest, getBalanceRequest, deleteFinanzaRequest, updateFinanzaRequest } from "../api/finanzas";
 
 import { useAuth } from "./authContext";
-import { is } from "zod/locales";
+
 
 const finanzasContext = createContext();
 
