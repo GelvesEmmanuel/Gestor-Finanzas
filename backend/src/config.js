@@ -1,1 +1,1 @@
-export const TOKEN_SECRET = "some secret key"   //llave secreta la uso en jwt.js para crear token  
+export const TOKEN_SECRET = process.env.TOKEN_SECRET   //llave secreta la uso en jwt.js para crear token  

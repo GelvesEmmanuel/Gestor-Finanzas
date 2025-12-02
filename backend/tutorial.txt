@@ -63,3 +63,6 @@ npm install react-hook-form
 
 cuando intentamos hacer peticiones o mandar datos al backend desde el frontend sale problema de cors ya que uno es port 5173 y el otro 3000 y deberian ser el mismo , se coluciona en app,js del backend
 instalando cors
+
+torres19emanuel_db_user
+pCwYIUn2o3ZtwJvd
