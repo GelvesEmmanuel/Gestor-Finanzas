@@ -8,7 +8,7 @@ import FinanzasFormPages from "./pages/finanzasFormPages.jsx";
 import ProfilePages from "./pages/profilePages.jsx";
 import Navbar from "./components/Navbar.jsx";
 import MetasPages from "./pages/metasPages.jsx";
-import HistorialPages from "./pages/historialPages.jsx"
+import HistorialPages from "./pages/HistorialPages.jsx"
 
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 import { FinanzasProvider } from "./context/finanzasContext.jsx";
