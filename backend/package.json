@@ -4,7 +4,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && node --experimental-vm-modules ./node_modules/jest/bin/jest.js --verbose",
+    "test:unit": "npm run test -- --coverage --coverageDirectory=coverage-unit",
+    "test:integration": "cross-env NODE_ENV=test set NODE_OPTIONS=--experimental-vm-modules && node --experimental-vm-modules ./node_modules/jest/bin/jest.js --verbose --testPathPattern=tests/integration --coverage --coverageDirectory=coverage-integration",
+    "test:selenium": "jest tests/selenium --testTimeout=30000"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +27,12 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "chromedriver": "^142.0.3",
+    "cross-env": "^10.1.0",
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.3.0",
+    "nodemon": "^3.1.10",
+    "selenium-webdriver": "^4.38.0",
+    "supertest": "^7.1.4"
   }
 }
