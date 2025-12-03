@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"; // para encriptar passwords
 import { createdAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
+import { httpUrl } from "zod";
 
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
@@ -49,7 +50,12 @@ export const login = async (req, res) => {
 
     const token = await createdAccesToken({ id: userFound._id });
     console.log("Token generado:", token);
-    res.cookie("token", token); // guardo elp token creado como una cookie
+    res.cookie("token", token, {
+      httpOnly: true, //no accesibe desde js
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    }); // guardo elp token creado como una cookie
 
     //devuelve el usuario que se ha guardado
     // se modifica para que no devuelva passworr
