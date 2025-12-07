@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs"; // para encriptar passwords
 import { createdAccesToken } from "../libs/jwt.js";
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
-import { httpUrl } from "zod";
 
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
@@ -54,7 +53,7 @@ export const login = async (req, res) => {
       httpOnly: true, //no accesibe desde js
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     }); // guardo elp token creado como una cookie
 
     //devuelve el usuario que se ha guardado
@@ -78,20 +77,24 @@ export const logout = (req, res) => {
   });
   return res.sendStatus(200);
 };
+
 export const profile = async (req, res) => {
-  const userFound = await User.findById(req.user.id);
+  try {
+    const userFound = await User.findById(req.user.id);
+    if (!userFound) {
+      return res.status(400).json({ message: "user not found" });
+    }
 
-  if (!userFound) return res.status(400).json({ message: "user not found" });
-
-  return res.json({
-    id: userFound._id,
-    username: userFound.username,
-    email: userFound.email,
-    createdAt: userFound.createdAt,
-    updatedAt: userFound.updatedAt,
-  });
-
-  res.send("profile");
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+      createdAt: userFound.createdAt,
+      updatedAt: userFound.updatedAt,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 export const verifyToken = async (req, res) => {
@@ -99,10 +102,10 @@ export const verifyToken = async (req, res) => {
 
   if (!token) return res.status(400).json({ message: "No esta autorizado" });
 
-  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-    if (err) return res.status(401).json({ message: "No esta autorizado" });
+  try {
+    const { id: userId } = jwt.verify(token, TOKEN_SECRET);
+    const userFound = await User.findById(userId);
 
-    const userFound = await User.findById(user.id);
     if (!userFound)
       return res.status(401).json({ message: "No esta autorizado" });
 
@@ -111,5 +114,7 @@ export const verifyToken = async (req, res) => {
       username: userFound.username,
       email: userFound.email,
     });
-  });
+  } catch (error) {
+    return res.status(401).json({ message: "No esta autorizado" });
+  }
 };
