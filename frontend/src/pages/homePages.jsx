@@ -1,6 +1,9 @@
 // src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import img1 from "../styles/img1.png";
+import img2 from "../styles/img1.png";
+import logo from "../styles/img1.png";
 
 // Componente HomePages
 
@@ -17,11 +20,11 @@ const HomePages = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Image 1 */}
           <div className="bg-gray-200 from-indigo-100 to-blue-100 rounded-3xl p-6 shadow-lg flex flex-col items-center">
-            <img src="/public/1761612945.png" alt="Gráfico de crecimiento" className="w-full max-w-full h-auto rounded-lg" />
+            <img src={img2}  alt="Gráfico de crecimiento" className="w-full max-w-full h-auto rounded-lg" />
           </div>
           {/* Image 2 */}
           <div className="bg-gray-200 from-indigo-100 to-blue-100 rounded-3xl p-6 shadow-lg flex flex-col items-center">
-            <img src="/public/1761613186.png" alt="Panel de control" className="w-full max-w-full h-auto rounded-lg" />
+            <img src={img2} alt="Panel de control" className="w-full max-w-full h-auto rounded-lg" />
           </div>
         </div>
         {/* Sección de Beneficios y Objetivo */}
